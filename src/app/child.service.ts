@@ -31,9 +31,16 @@ export class ChildService {
   }
 
   // Update details of a specific child
-  updateChild(childId: number, payload: any): Observable<any> {
+  updateChild(childId: number, formData: FormData): Observable<any> {
     const url = `${this.baseUrl}/childs/${childId}/`;
-    return this.http.put(url, payload, { headers: this.headers });
+  
+    // Set the Authorization header with the token
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}` // Replace this.token with your actual token variable
+    });
+  
+    return this.http.put(url, formData, { headers });
   }
-
+  
+  
 }

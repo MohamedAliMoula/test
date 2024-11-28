@@ -12,7 +12,7 @@ export class ChildrenComponent implements OnInit {
   selectedChild: any = null;
 
   childForm!: FormGroup;
-  username: string = 'asidikidemo'; // Static username for now
+  username: string = 'asidikidemo'; 
   
   constructor(private childService: ChildService, private fb: FormBuilder) {}
 
@@ -58,21 +58,20 @@ export class ChildrenComponent implements OnInit {
       }
     );
   }
-
   updateChild(): void {
     if (this.childForm.valid && this.selectedChild) {
-      const payload = {
-        first_name: this.childForm.value.first_name?.trim() || null,
-        last_name: this.childForm.value.last_name?.trim() || null,
-        birthday: this.childForm.value.birthday || null, 
-        gender: this.childForm.value.gender || null,
-        street: this.childForm.value.street?.trim() || this.selectedChild.street || '', 
-        country: this.childForm.value.country || this.selectedChild.country || null,
-      };
+      const formData = new FormData();
   
-      console.log('Payload being sent:', payload);
+      formData.append('first_name', this.childForm.value.first_name?.trim() || '');
+      formData.append('last_name', this.childForm.value.last_name?.trim() || '');
+      formData.append('birthday', this.childForm.value.birthday || ''); 
+      formData.append('gender', this.childForm.value.gender || '');
   
-      this.childService.updateChild(this.selectedChild.id, payload).subscribe(
+      formData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+  
+      this.childService.updateChild(this.selectedChild.id, formData).subscribe(
         (response) => {
           console.log('Child updated successfully:', response);
           this.getChildren(); 
@@ -80,9 +79,7 @@ export class ChildrenComponent implements OnInit {
         (error) => {
           console.error('Error updating child:', error);
           if (error.status === 400) {
-            console.error('Validation error occurred. Check the payload.');
-          } else {
-            console.error('An unexpected error occurred.');
+            console.error('Validation error details:', error.error || 'No details provided');
           }
         }
       );
@@ -95,6 +92,10 @@ export class ChildrenComponent implements OnInit {
       }
     }
   }
+  
+  
+  
+  
   // addSocialNetwork(): void {
   //   this.selectedChild.socialNetworks.push({ id: 0, name: '', username: '' });
   // }

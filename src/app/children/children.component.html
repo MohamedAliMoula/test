@@ -1,37 +1,52 @@
 <div class="container mt-5">
     <!-- Tabs for Profile and Children -->
     <div class="card shadow" style="padding: 20px;">
-      <div class="card-header d-flex justify-content-between align-items-center bg-light">
-        <button class="btn btn-outline-primary active" type="button">Modifier mon profil</button>
+      <div class="card-header d-flex align-items-center bg-light">
+        <button class="btn btn-outline-primary active"
+        style="margin-right: 10px;" type="button" routerLink="/profile">Modifier mon profil</button>
         <button class="btn btn-outline-primary" type="button">Mes Enfants</button>
       </div>
   
-      <!-- Children Selection Section -->
-      <div class="d-flex justify-content-start my-4">
+    <!-- Children Selection Section -->
+    <div class="d-flex justify-content-start flex-wrap gap-3 my-4">
+        <!-- Loop through children to display each child -->
         <div
-          *ngFor="let child of children"
-          class="child-profile d-flex flex-column align-items-center me-3"
-          (click)="selectChild(child.id)"
-          style="cursor: pointer;"
+        *ngFor="let child of children"
+        class="child-card text-center"
+        (click)="selectChild(child.id)"
+        style="cursor: pointer;"
         >
-          <img
-            [src]="child.user?.profile_picture || 'assets/child.png'"
-            alt="{{ child.user?.first_name }} Profile"
-            class="rounded-circle border"
-            width="60"
-          />
-          <p class="mt-2 text-center">
-            {{ child.user?.first_name || 'Nom inconnu' }}
-          </p>
+        <div class="card">
+            <div class="card-body d-flex flex-column align-items-center">
+            <img
+                [src]="child.user?.profile_picture || 'assets/child.png'"
+                alt="{{ child.user?.first_name }} Profile"
+                class="rounded-circle mb-3"
+                width="70"
+            />
+            <h6 class="mt-2 mb-0 text-primary">{{ child.user?.first_name || 'Nom inconnu' }}</h6>
+            <p class="text-muted">{{ child.user?.last_name || '' }}</p>
+            </div>
         </div>
+        </div>
+    
         <!-- Add New Child -->
-        <div class="child-profile d-flex flex-column align-items-center">
-          <button class="btn btn-outline-primary rounded-circle" style="width: 60px; height: 60px;">
-            +
-          </button>
-          <p class="mt-2 text-center">Ajouter</p>
+        <div class="child-card text-center">
+        <div class="card">
+            <div class="card-body d-flex flex-column align-items-center">
+            <button
+                class="btn btn-outline-primary rounded-circle mb-3"
+                style="width: 70px; height: 70px;"
+            >
+                +
+            </button>
+            <h6 class="mt-2 mb-0 text-primary">Ajouter</h6>
+            </div>
         </div>
-      </div>
+        </div>
+    </div>
+    
+  
   
       <!-- Profile Form Section -->
       <h5 class="mb-4">INFORMATION DE BASE</h5>
@@ -85,7 +100,7 @@
           <div class="col">
             <label class="form-label">Genre</label>
             <select formControlName="gender" class="form-select">
-              <option [defaultSelected]="" value="M">Garçon</option>
+              <option selected value="M">Garçon</option>
               <option value="F">Fille</option>
               <option value="O">Autre</option>
             </select>

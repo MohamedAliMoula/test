@@ -60,4 +60,43 @@
     background-color: #007bff;
     border-color: #007bff;
   }
-  
+  .child-card {
+  width: 240px; /* Adjust card width */
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Smooth rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+  padding: 15px 10px; /* Center the content inside */
+}
+
+img {
+  border: 2px solid #ddd;
+}
+
+h6 {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #007bff; /* Primary color for names */
+}
+
+p {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: -5px; /* Adjust margin for spacing */
+}
+
+.d-flex.gap-3 {
+  gap: 15px !important; /* Adjust spacing between cards */
+}
