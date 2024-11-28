@@ -10,8 +10,7 @@ import { ProfileService } from '../profile.service';
 })
 export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
-  username: string = 'john'; // Static username for now
-
+  username: string = 'asidikidemo'; 
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
@@ -55,9 +54,8 @@ export class ProfileComponent implements OnInit {
 
   saveProfile(): void {
     if (this.profileForm.valid) {
-      // Prepare the payload
       const payload: any = {
-        username: this.username, // Include the username in the payload
+        username: this.username, 
         first_name: this.profileForm.value.firstName,
         last_name: this.profileForm.value.lastName,
         email: this.profileForm.value.email,
@@ -65,14 +63,12 @@ export class ProfileComponent implements OnInit {
         gender: this.profileForm.value.gender,
       };
   
-      // Only include phone_number if it is defined
       if (this.profileForm.value.phone) {
         payload.phone_number = this.profileForm.value.phone;
       }
   
-      console.log('Payload to be sent:', payload); // Debug payload
+      console.log('Payload to be sent:', payload); 
   
-      // Send the request
       this.profileService.updateProfile(this.username, payload).subscribe(
         (response) => {
           console.log('Profile updated successfully:', response);

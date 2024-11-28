@@ -21,7 +21,6 @@ export class ChildrenComponent implements OnInit {
     this.initializeForm();
   }
 
-  // Initialize the reactive form
   initializeForm(): void {
     this.childForm = this.fb.group({
       first_name: ['', ],
@@ -31,7 +30,6 @@ export class ChildrenComponent implements OnInit {
     });
   }
 
-  // Fetch the list of children
   getChildren(): void {
     this.childService.getChildren(this.username).subscribe(
       (data) => {
@@ -44,7 +42,6 @@ export class ChildrenComponent implements OnInit {
     );
   }
 
-  // Select a child and load their data into the form
   selectChild(childId: number): void {
     this.childService.getChild(childId).subscribe(
       (data) => {
@@ -64,25 +61,21 @@ export class ChildrenComponent implements OnInit {
 
   updateChild(): void {
     if (this.childForm.valid && this.selectedChild) {
-      // Construct the payload dynamically
       const payload = {
-        first_name: this.childForm.value.first_name?.trim() || null, // Trim to avoid empty spaces
+        first_name: this.childForm.value.first_name?.trim() || null,
         last_name: this.childForm.value.last_name?.trim() || null,
-        birthday: this.childForm.value.birthday || null, // Null if not provided
+        birthday: this.childForm.value.birthday || null, 
         gender: this.childForm.value.gender || null,
-        street: this.childForm.value.street?.trim() || this.selectedChild.street || '', // Prioritize form value
+        street: this.childForm.value.street?.trim() || this.selectedChild.street || '', 
         country: this.childForm.value.country || this.selectedChild.country || null,
-        // Add other fields if necessary
       };
   
       console.log('Payload being sent:', payload);
   
-      // Call the service to update the child
       this.childService.updateChild(this.selectedChild.id, payload).subscribe(
         (response) => {
           console.log('Child updated successfully:', response);
-          this.getChildren(); // Refresh the list after update
-          // Optionally show a success message
+          this.getChildren(); 
         },
         (error) => {
           console.error('Error updating child:', error);
@@ -91,7 +84,6 @@ export class ChildrenComponent implements OnInit {
           } else {
             console.error('An unexpected error occurred.');
           }
-          // Optionally show an error message
         }
       );
     } else {
